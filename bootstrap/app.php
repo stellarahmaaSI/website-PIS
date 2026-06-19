@@ -48,9 +48,6 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
-if (isset($_ENV['VERCEL_ENV'])) {
-    $app->useStoragePath('/tmp');
-}
 
 /*
 |--------------------------------------------------------------------------
@@ -64,17 +61,8 @@ if (isset($_ENV['VERCEL_ENV'])) {
 */
 
 if (isset($_ENV['VERCEL_ENV'])) {
-    // Belokkan storage utama ke /tmp
+    // Belokkan storage utama ke /tmp yang berstatus writable
     $app->useStoragePath('/tmp');
-    
-    // Bikin folder untuk cache view secara otomatis di /tmp jika belum ada
-    $viewCachePath = '/tmp/framework/views';
-    if (!is_dir($viewCachePath)) {
-        mkdir($viewCachePath, 0755, true);
-    }
-    
-    // Paksa Laravel menggunakan path baru ini untuk kompilasi Blade
-    config(['view.compiled' => $viewCachePath]);
 }
 
 return $app;

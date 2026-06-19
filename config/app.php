@@ -197,6 +197,9 @@ return [
 
     ],
 
+    'compiled' => isset($_ENV['VERCEL_ENV']) 
+    ? '/tmp/framework/views' 
+    : env('VIEW_COMPILED_PATH', realpath(storage_path('framework/views'))),
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
