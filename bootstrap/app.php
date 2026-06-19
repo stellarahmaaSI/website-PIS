@@ -41,6 +41,10 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+if (isset($_ENV['VERCEL_ENV'])) {
+    $app->useStoragePath('/tmp');
+}
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
