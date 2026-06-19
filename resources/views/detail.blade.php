@@ -9,7 +9,17 @@
 
         <!-- GAMBAR -->
         <div class="col-md-6">
-            <img src="{{ asset($batik->gambar_batik) }}" class="img-fluid rounded">
+            @if($batik->gambar_batik)
+                @if(Str::startsWith($batik->gambar_batik, 'batik/'))
+                    <img src="{{ asset('storage/' . $batik->gambar_batik) }}" class="img-fluid rounded">
+                @else
+                    <img src="{{ asset('images/' . $batik->gambar_batik) }}" class="img-fluid rounded">
+                @endif
+            @else
+                <div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 350px;">
+                    <span class="text-muted">Tidak ada gambar</span>
+                </div>
+            @endif
         </div>
 
         <!-- DETAIL -->

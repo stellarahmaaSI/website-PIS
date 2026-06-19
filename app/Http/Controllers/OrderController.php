@@ -97,15 +97,19 @@ class OrderController extends Controller
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
+        $pelanggan = Pelanggan::find(session('pelanggan_id'));
+        $email = $pelanggan ? $pelanggan->email : 'customer@email.com';
+        $nama = $pelanggan ? $pelanggan->nama : 'Customer';
+
         // PARAMETER TRANSAKSI
         $params = [
             'transaction_details' => [
-                'order_id' => $order->id,
+                'order_id' => $order->id . '-' . time(),
                 'gross_amount' => $order->total_price,
             ],
             'customer_details' => [
-                'first_name' => 'Customer',
-                'email' => 'customer@email.com',
+                'first_name' => $nama,
+                'email' => $email,
             ]
         ];
 

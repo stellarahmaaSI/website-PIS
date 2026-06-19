@@ -8,5 +8,5 @@ class Batik extends Model
 {
     protected $table = 'batik';
     protected $primaryKey = 'id_batik';
-    protected $fillable = ['nama_batik', 'gambar_batik', 'deskripsi'];
+    protected $fillable = ['nama_batik', 'gambar_batik', 'deskripsi', 'harga', 'stok'];
 }

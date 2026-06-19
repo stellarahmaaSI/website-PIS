@@ -112,7 +112,11 @@
     @forelse($batik as $item)
         <div class="batik-card">
             @if($item->gambar_batik)
-                <img src="{{ asset('storage/' . $item->gambar_batik) }}" alt="{{ $item->nama_batik }}" class="batik-image">
+                @if(Str::startsWith($item->gambar_batik, 'batik/'))
+                    <img src="{{ asset('storage/' . $item->gambar_batik) }}" alt="{{ $item->nama_batik }}" class="batik-image">
+                @else
+                    <img src="{{ asset('images/' . $item->gambar_batik) }}" alt="{{ $item->nama_batik }}" class="batik-image">
+                @endif
             @else
                 <div class="batik-image" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #F5E6D3 0%, #E8D4C0 100%);">
                     <span style="color: #8B6239; font-size: 24px;">No Image</span>
@@ -122,7 +126,7 @@
                 <div class="batik-name">{{ $item->nama_batik }}</div>
                 <div class="batik-desc">{{ Str::limit($item->deskripsi, 80) }}</div>
                 <div class="batik-footer">
-                    <a href="#" class="btn-view">Lihat Detail</a>
+                    <a href="{{ route('batik.show', $item->id_batik) }}" class="btn-view">Lihat Detail</a>
                 </div>
             </div>
         </div>

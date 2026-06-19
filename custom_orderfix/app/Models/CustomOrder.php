@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomOrder extends Model
 {
-    protected $table = 'custom_orders';
+    protected $table = 'custom_order';
 
-    protected $primaryKey = 'id'; // WAJIB
+    protected $primaryKey = 'id_custom'; // WAJIB
 
     protected $fillable = [
         'id_pelanggan',

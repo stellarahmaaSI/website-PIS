@@ -36,28 +36,30 @@ Route::resource('batik', BatikController::class);
 Route::resource('custom_order', CustomOrderController::class);
 Route::resource('pembayaran', PembayaranController::class);
 
-// CART (KERANJANG)
-Route::get('/cart', [CartController::class, 'index']);
-Route::get('/cart/add/{id}', [CartController::class, 'add']);
+// PROTECTED ROUTES FOR LOGGED IN USERS
+Route::middleware(['auth.custom'])->group(function () {
+    // CART (KERANJANG)
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::get('/cart/add/{id}', [CartController::class, 'add']);
+    Route::post('/cart/update/{id}', [CartController::class, 'update']);
+    Route::get('/cart/delete/{id}', [CartController::class, 'delete']);
 
-Route::post('/cart/update/{id}', [CartController::class, 'update']);
-Route::get('/cart/delete/{id}', [CartController::class, 'delete']);
+    // CHECKOUT & ORDER
+    Route::get('/checkout', [OrderController::class, 'checkout']);
+    Route::post('/checkout', [OrderController::class, 'checkout']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/checkout/detail', [OrderController::class, 'checkoutDetail']);
+    Route::get('/order/{id}/kirim', [OrderController::class, 'kirim']);
+    Route::get('/order/{id}/selesai', [OrderController::class, 'selesai']);
+    Route::match(['get','post'], '/checkout', [OrderController::class, 'checkout']);
+    Route::get('/payment/{id}', [OrderController::class, 'payment']);
+    Route::post('/checkout/process', [OrderController::class, 'processCheckout']);
 
-// CHECKOUT & ORDER
-Route::get('/checkout', [OrderController::class, 'checkout']);
-Route::post('/checkout', [OrderController::class, 'checkout']);
-Route::get('/orders', [OrderController::class, 'index']);
-Route::get('/checkout/detail', [OrderController::class, 'checkoutDetail']);
-
-Route::get('/order/{id}/kirim', [OrderController::class, 'kirim']);
-Route::get('/order/{id}/selesai', [OrderController::class, 'selesai']);
+    // PROFILE
+    Route::get('/profile', [PelangganController::class, 'profile']);
+    Route::post('/profile/update', [PelangganController::class, 'updateProfile']);
+});
 
 Route::get('/batik/{id}', [BatikController::class, 'show'])->name('batik.show');
-Route::match(['get','post'], '/checkout', [OrderController::class, 'checkout']);
-Route::get('/payment/{id}', [OrderController::class, 'payment']);
-
-Route::get('/profile', [PelangganController::class, 'profile']);
-Route::post('/profile/update', [PelangganController::class, 'updateProfile']);
-Route::post('/checkout/process', [OrderController::class, 'processCheckout']);
 
 Route::post('/midtrans/notification', [MidtransController::class, 'notification']);

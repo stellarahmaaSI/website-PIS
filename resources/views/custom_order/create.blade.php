@@ -143,6 +143,16 @@
 
 
 <div class="order-container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('custom_order.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -150,20 +160,20 @@
         <div class="form-section">
             <h3>Informasi Pemesan</h3>
             
-            @if(auth()->check())
+            @if($pelanggan)
                 <div class="form-group">
                     <label class="form-label">Nama Lengkap</label>
-                    <input type="text" class="form-control" value="{{ auth()->user()->nama }}" disabled>
+                    <input type="text" class="form-control" value="{{ $pelanggan->nama }}" disabled>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" value="{{ auth()->user()->email }}" disabled>
+                    <input type="email" class="form-control" value="{{ $pelanggan->email }}" disabled>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Nomor Telepon</label>
-                    <input type="text" class="form-control" value="{{ auth()->user()->nomor_telepon }}" disabled>
+                    <input type="text" class="form-control" value="{{ $pelanggan->nomor_telepon }}" disabled>
                 </div>
             @else
                 <div class="form-group">

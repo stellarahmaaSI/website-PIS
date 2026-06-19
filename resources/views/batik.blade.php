@@ -14,9 +14,15 @@
                 <div class="card p-3 mb-3">
 
                     {{-- GAMBAR --}}
-                    <img src="{{ $batik->gambar_batik ? asset($batik->gambar_batik) : 'https://via.placeholder.com/300' }}" 
-                         class="img-fluid mb-2" 
-                         style="height:200px; object-fit:cover;">
+                    @if($batik->gambar_batik)
+                        @if(Str::startsWith($batik->gambar_batik, 'batik/'))
+                            <img src="{{ asset('storage/' . $batik->gambar_batik) }}" class="img-fluid mb-2" style="height:200px; object-fit:cover;">
+                        @else
+                            <img src="{{ asset('images/' . $batik->gambar_batik) }}" class="img-fluid mb-2" style="height:200px; object-fit:cover;">
+                        @endif
+                    @else
+                        <img src="https://via.placeholder.com/300" class="img-fluid mb-2" style="height:200px; object-fit:cover;">
+                    @endif
 
                     {{-- NAMA --}}
                     <h5>{{ $batik->nama_batik }}</h5>

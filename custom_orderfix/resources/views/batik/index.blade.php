@@ -19,7 +19,11 @@
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100" style="border: none; border-left: 5px solid #D4AF37;">
                         @if($item->gambar_batik)
-                            <img src="{{ asset('storage/' . $item->gambar_batik) }}" class="card-img-top" alt="{{ $item->nama_batik }}" style="height: 250px; object-fit: cover;">
+                            @if(Str::startsWith($item->gambar_batik, 'batik/'))
+                                <img src="{{ asset('storage/' . $item->gambar_batik) }}" class="card-img-top" alt="{{ $item->nama_batik }}" style="height: 250px; object-fit: cover;">
+                            @else
+                                <img src="{{ asset('images/' . $item->gambar_batik) }}" class="card-img-top" alt="{{ $item->nama_batik }}" style="height: 250px; object-fit: cover;">
+                            @endif
                         @else
                             <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
                                 <span class="text-muted">Tidak ada gambar</span>
